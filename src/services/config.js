@@ -1,3 +1,3 @@
 export const config = {
-  serverUrl: 'http://localhost:8080',
+  serverUrl: 'https://greenmart-backend-1.onrender.com',
 }
