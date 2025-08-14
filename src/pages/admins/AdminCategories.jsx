@@ -1,5 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
+
 
 const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -7,7 +11,7 @@ const AdminCategories = () => {
     const [error, setError] = useState(null);
     const fetchCategories = async () => {
       try{
-          const response = await axios.get("http://localhost:8080/categories");
+          const response = await axios.get(`${serverUrl}/categories`);
           setCategories(response.data);
       }catch(err){
           setError("Failed to fetch products");

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 const statusColors = {
   PENDING: "bg-yellow-100 text-yellow-800",
@@ -32,7 +35,7 @@ const YourOrders = () => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/orders/user/${authUser?.userId}`
+          `${serverUrl}/orders/user/${authUser?.userId}`
         );
         console.log("Orders API response:", res.data);
         setOrders(res.data);

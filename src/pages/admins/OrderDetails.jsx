@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 const statusColors = {
   PENDING: "bg-yellow-100 text-yellow-800",
@@ -36,7 +39,7 @@ const OrderDetails = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/orders/admin/all");
+      const res = await axios.get(`${serverUrl}/orders/admin/all`);
       setOrders(res.data);
     } catch (error) {
       toast.error("Failed to fetch orders");
@@ -53,7 +56,7 @@ const OrderDetails = () => {
     }));
 
     try {
-      await axios.put(`http://localhost:8080/orders/${orderId}`, {
+      await axios.put(`${serverUrl}/orders/${orderId}`, {
         orderStatus: newStatus,
       });
       setOrders((prev) =>
@@ -91,7 +94,7 @@ const OrderDetails = () => {
     }));
 
     try {
-      await axios.delete(`http://localhost:8080/orders/${orderId}`);
+      await axios.delete(`${serverUrl}/orders/${orderId}`);
       setOrders((prev) => prev.filter((order) => order.id !== orderId));
       toast.success("Order deleted successfully");
       cancelDelete(); // hide popup after delete

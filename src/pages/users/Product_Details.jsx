@@ -9,6 +9,9 @@ import { FaHeart, FaRegStar, FaStar } from 'react-icons/fa';
 import { addReview, getAllProductReviews } from '../../services/review';
 import { useAuth } from '../../context/AuthContext';
 import RelatedProductCard from '../../Component/RelatedProductCard';
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -31,7 +34,7 @@ const ProductDetails = () => {
   const reviewsToShow = showAllReviews ? reviews : reviews.slice(0, 3);
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/products/${id}`);
+      const response = await axios.get(`${serverUrl}/products/${id}`);
       setProduct(response.data);
     } catch (error) {
       console.error("Error fetching product details:", error);

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import { config } from "../services/config";
+
+const serverUrl = config.serverUrl;
+
 
 const AddProductForm = () => {
     const [formData, setFormData] = useState({
@@ -23,10 +27,10 @@ const AddProductForm = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const catRes = await axios.get('http://localhost:8080/categories');
+                const catRes = await axios.get(`${serverUrl}/categories`);
                 setCategories(catRes.data);
 
-                const supRes = await axios.get('http://localhost:8080/admin/suppliers');
+                const supRes = await axios.get(`${serverUrl}/admin/suppliers`);
                 console.log("Fetched Suppliers:", supRes.data);
                 setSuppliers(supRes.data);
             } catch (err) {
@@ -77,7 +81,7 @@ const AddProductForm = () => {
         }
 
         try {
-            await axios.post('http://localhost:8080/products', payload, {
+            await axios.post(`${serverUrl}/products`, payload, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setStatus('Product added successfully!');

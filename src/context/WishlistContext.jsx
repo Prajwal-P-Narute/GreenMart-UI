@@ -2,6 +2,10 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 import { toast } from "react-toastify";
+import { config } from "../services/config";
+
+const serverUrl = config.serverUrl;
+
 
 const WishlistContext = createContext();
 
@@ -21,7 +25,7 @@ export const WishlistProvider = ({ children }) => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:8080/wishlist/${userId}`);
+      const response = await axios.get(`${serverUrl}/wishlist/${userId}`);
       setWishlist(response.data || []); 
     } catch (error) {
       console.error("Failed to fetch wishlist", error);
@@ -43,7 +47,7 @@ export const WishlistProvider = ({ children }) => {
   }
 
   try {
-    await axios.post(`http://localhost:8080/wishlist/${userId}/${productId}`);
+    await axios.post(`${serverUrl}/wishlist/${userId}/${productId}`);
     fetchWishlist();
     toast.success("Wishlist updated");
   } catch (error) {

@@ -6,6 +6,9 @@ import { useAddress } from './../../context/AddressContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import BillingDetails from '../../Component/BillingDetails';
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 const Checkout = () => {
   const offer = 600;
@@ -77,7 +80,7 @@ const Checkout = () => {
     console.log('Order Payload:', orderPayload);
 
     try {
-      const res = await axios.post('http://localhost:8080/orders/place', orderPayload);
+      const res = await axios.post(`${serverUrl}/orders/place`, orderPayload);
       toast.success(res.data.message || 'Order placed successfully!');
       const { orderId } = res.data;
       clearCart(); // Clear cart after order placed

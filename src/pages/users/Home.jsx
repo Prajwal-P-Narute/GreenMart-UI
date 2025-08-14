@@ -8,6 +8,9 @@ import myImage from '../../assets/farmer.png'
 import axios from 'axios'
 import FloatingStack from './../../Component/FloatingStack';
 import { useNavigate } from 'react-router-dom'
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 const Home = () => {
   const { wishlist, toggleWishlist } = useWishlist();
   const [products, setProducts] = useState([]);
@@ -15,6 +18,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [categories,setCategories] = useState([]);
   const navigate = useNavigate();
+
 
   const handleShopNow = () => {
     navigate('/categories', {
@@ -24,7 +28,7 @@ const Home = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get(`${serverUrl}/products`);
       const formatted = response.data.map(product => ({
         _id: product.id,
         name: product.prodName,
@@ -45,7 +49,7 @@ const Home = () => {
   // Fetch categories from backend
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/categories");
+      const response = await axios.get(`${serverUrl}/categories`);
 
       const formatted = response.data.map(cat => ({
         id: cat.id,

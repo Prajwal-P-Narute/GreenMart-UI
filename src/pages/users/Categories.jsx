@@ -4,6 +4,9 @@ import ProductCard from '../../Component/ProductCard';
 import myImage from '../../assets/farmer.png'
 import { useLocation } from 'react-router-dom';
 import FloatingStack from '../../Component/FloatingStack';
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -12,7 +15,7 @@ const Categories = () => {
   //fetch all categories from backend
   const fetchCategories = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/categories");
+    const response = await axios.get(`${serverUrl}/categories`);
 
     const formatted = response.data.map(cat => ({
       
@@ -35,7 +38,7 @@ const Categories = () => {
 
   const fetchProducts = async () => {
     try{
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get(`${serverUrl}/products`);
       const formatted = response.data.map(product => ({
         id: product.id,
         name: product.prodName,

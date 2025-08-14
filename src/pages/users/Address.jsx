@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import AddressTable from "../../Component/AddressTable";
 import AddressForm from "../../Component/AddressForm";
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
  
 
 const Address = () => {
@@ -54,7 +57,7 @@ const Address = () => {
 
   const fetchAddresses = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/address/${userId}`);
+      const res = await axios.get(`${serverUrl}/address/${userId}`);
       setAddresses(res.data);
     } catch (err) {
       console.error("Error fetching addresses:", err);
@@ -80,10 +83,10 @@ const Address = () => {
 
     try {
       if (editingId) {
-        await axios.put(`http://localhost:8080/address/${userId}/${editingId}`, form);
+        await axios.put(`${serverUrl}/address/${userId}/${editingId}`, form);
         toast.success("Address updated.");
       } else {
-        await axios.post(`http://localhost:8080/address/${userId}`, form);
+        await axios.post(`${serverUrl}/address/${userId}`, form);
         toast.success("Address added.");
       }
      
@@ -105,7 +108,7 @@ const Address = () => {
 
   const handleDelete = async (userId, addrId) => {
     try {
-      await axios.delete(`http://localhost:8080/address/${userId}/${addrId}`);
+      await axios.delete(`${serverUrl}/address/${userId}/${addrId}`);
       fetchAddresses();
       toast.success("Address deleted.");
     } catch (err) {

@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ProductCard from '../../Component/ProductCard';
 import emptyProduct from '../../assets/empty_product_search.png'
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 const SearchResults = () => {
     const { keyword } = useParams();
@@ -20,7 +23,7 @@ const SearchResults = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.get(`http://localhost:8080/products/search?q=${encodeURIComponent(keyword)}`);
+                const response = await axios.get(`${serverUrl}/products/search?q=${encodeURIComponent(keyword)}`);
                 console.log("Raw backend response:", response.data);
 
                 const normalized = Array.isArray(response.data)

@@ -11,6 +11,10 @@ import {
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
+
 // Register chart.js components
 ChartJS.register(
   BarElement,
@@ -30,26 +34,26 @@ const AdminDashboard = () => {
 
   // Fetch all dashboard data
   useEffect(() => {
-    axios.get("http://localhost:8080/dashboard/users/count").then((res) => {
+    axios.get(`${serverUrl}/dashboard/users/count`).then((res) => {
       setUserCount(res.data);
     });
 
-    axios.get("http://localhost:8080/dashboard/suppliers/count").then((res) => {
+    axios.get(`${serverUrl}/dashboard/suppliers/count`).then((res) => {
       setSupplierCount(res.data);
     });
 
-    axios.get("http://localhost:8080/dashboard/product/count").then((res) => {
+    axios.get(`${serverUrl}/dashboard/product/count`).then((res) => {
       setProductCount(res.data);
     });
 
     axios
-      .get("http://localhost:8080/dashboard/products/by-category")
+      .get(`${serverUrl}/dashboard/products/by-category`)
       .then((res) => {
         setCategoryCounts(res.data); // { Fruits: 35, Vegetables: 22, etc. }
       });
 
     axios
-      .get("http://localhost:8080/dashboard/products/top")
+      .get(`${serverUrl}/dashboard/products/top`)
       .then((res) => {
         const data = res.data;
         const labels = data.map((item) => Object.keys(item)[0]);

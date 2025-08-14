@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 // SupplierForm handles both Add and Edit
 const SupplierForm = ({ supplier, onSuccess, onCancel }) => {
@@ -32,13 +35,13 @@ const SupplierForm = ({ supplier, onSuccess, onCancel }) => {
       if (supplier && supplier.id) {
         // Update existing supplier
         await axios.put(
-          `http://localhost:8080/admin/update-supplier/${supplier.id}`,
+          `${serverUrl}/admin/update-supplier/${supplier.id}`,
           requestDTO
         );
         toast.success("Supplier updated successfully!");
       } else {
         // Add new supplier
-        await axios.post("http://localhost:8080/admin/add-supplier", requestDTO);
+        await axios.post(`${serverUrl}/admin/add-supplier`, requestDTO);
         toast.success("Supplier added successfully!");
       }
       onSuccess();

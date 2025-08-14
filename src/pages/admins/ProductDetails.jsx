@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddProductForm from '../../Component/AddProductForm'
+import { config } from "../../services/config";
+
+const serverUrl = config.serverUrl;
 
 const ProductDetails = () => {
   const [products, setProducts] = useState([]);
@@ -11,7 +14,7 @@ const ProductDetails = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8080/products');
+      const response = await axios.get(`${serverUrl}/products`);
       setProducts(response.data);
     } catch (err) {
       setError('Failed to fetch products');

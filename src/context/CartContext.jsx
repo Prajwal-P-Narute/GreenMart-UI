@@ -3,6 +3,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
  
 import { useAuth } from "./AuthContext";
+import { config } from "../services/config";
+
+const serverUrl = config.serverUrl;
+
  
 // Create context
 const CartContext = createContext();
@@ -25,7 +29,7 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.get(`http://localhost:8080/cart/user/${userId}`);
+      const response = await axios.get(`${serverUrl}/cart/user/${userId}`);
       setCartItems(response.data.items || []); // Assuming CartDTO structure
     } catch (error) {
       console.error("Error fetching cart:", error);
@@ -41,7 +45,7 @@ export const CartProvider = ({ children }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/cart/add`,
+        `${serverUrl}/cart/add`,
         null,
         {
           params: {
@@ -61,7 +65,7 @@ export const CartProvider = ({ children }) => {
   // Update quantity of product
   const updateQty = async (productId, quantity) => {
     try {
-      await axios.put(`http://localhost:8080/cart/update`, null, {
+      await axios.put(`${serverUrl}/cart/update`, null, {
         params: {
           userId: userId,
           productId: productId,
@@ -79,7 +83,7 @@ export const CartProvider = ({ children }) => {
   // Remove product from cart
   const removeFromCart = async (productId) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/cart/remove`, {
+      const response = await axios.delete(`${serverUrl}/cart/remove`, {
         params: {
           userId: userId,
           productId: productId,
@@ -100,7 +104,7 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await axios.delete(`http://localhost:8080/cart/clear`, {
+      await axios.delete(`${serverUrl}/cart/clear`, {
         params: { userId },
       });
 

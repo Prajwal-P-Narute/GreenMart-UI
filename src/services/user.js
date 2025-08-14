@@ -1,4 +1,8 @@
 import axios from './axiosInstance'
+import { config } from "../services/config";
+
+const serverUrl = config.serverUrl;
+
 
 export async function registerUser(
     firstName,
@@ -9,7 +13,7 @@ export async function registerUser(
 ){
     try{
         // create url
-        const url = `http://localhost:8080/users/signup`
+        const url = `${serverUrl}/users/signup`
 
         //create the body
         const body = {
@@ -35,7 +39,7 @@ export async function registerUser(
 export async function loginUser(email, password){
     try{
         // create url
-        const url = `http://localhost:8080/users/signin`
+        const url = `${serverUrl}/users/signin`
 
         // create the body
         const body = {
